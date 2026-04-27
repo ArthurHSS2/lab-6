@@ -1,0 +1,28 @@
+lw x1, 0(x0)        # x1 = 0x400 (base MMIO)
+
+loop:
+  lw   x2, 4(x1)    # lê key_pressed (borda de descida detectada) no sc_mmio.sv
+  
+  # Testa KEY[3] (incrementa)
+  andi x3, x2, 8
+  beq  x3, x0, test_key2
+  lw   x4, 12(x1)   
+  addi x4, x4, 1    
+  sw   x4, 12(x1)  
+  j    loop
+
+test_key2:
+  # Testa KEY[2] (decrementa)
+  andi x3, x2, 4
+  beq  x3, x0, test_key1
+  lw   x4, 12(x1)
+  addi x4, x4, -1   
+  sw   x4, 12(x1)
+  j    loop
+
+test_key1:
+  # Testa KEY[1] (zera)
+  andi x3, x2, 2
+  beq  x3, x0, loop
+  sw   x0, 12(x1)   
+  j    loop
