@@ -9,7 +9,7 @@ loop:
   lw   x4, 12(x1)   
   addi x4, x4, 1    
   sw   x4, 12(x1)  
-  j    loop
+  beq x0, x0, loop
 
 test_key2:
   # Testa KEY[2] (decrementa)
@@ -18,11 +18,11 @@ test_key2:
   lw   x4, 12(x1)
   addi x4, x4, -1   
   sw   x4, 12(x1)
-  j    loop
+  beq x0, x0, loop
 
 test_key1:
   # Testa KEY[1] (zera)
   andi x3, x2, 2
   beq  x3, x0, loop
   sw   x0, 12(x1)   
-  j    loop
+  beq x0, x0, loop
